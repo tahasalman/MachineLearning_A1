@@ -193,5 +193,65 @@ def run_q2_a():
 
         print("For step size {}, after {} epochs, the MSE with Validation Data is {}".format(step_size, num_epochs, mse))
 
+def run_q2_b():
+    initialize_data()
+    initial_params = [random(), random()]
+    num_epochs = 10000
+    step_size = 0.01
+
+    print("The data has been initialized: ")
+    print("The initial parameters are set to ({},{}) ".format(initial_params[0], initial_params[1]))
+    print("The number of epochs is set to {} ".format(num_epochs))
+    print("The step size is set to {}".format(step_size))
+
+    parameters = stochastic_gradient_descent(dataset=TRAINING_DATA,
+                                         parameters=initial_params,
+                                         step_size=step_size,
+                                         num_epochs=num_epochs)
+
+    final_parameters = parameters[-1]
+    predictions = get_predictions(TEST_DATA.x,final_parameters)
+    mse = get_mean_squared_error(TEST_DATA.y,predictions)
+
+    print("For step size {}, after {} epochs, the MSE with Test Data is {}".format(step_size, num_epochs, mse))
+
+def run_q3():
+    initialize_data()
+    initial_params = [random(), random()]
+    step_size = 0.01
+    num_epochs = 10000
+    range = [0,1.5]
+    num_sample_points = 150
+    random_5_epochs = (10,500,2000,5000,9000)
+
+    print("The data has been initialized: ")
+    print("The initial parameters are set to ({},{}) ".format(initial_params[0], initial_params[1]))
+    print("The step size is set to {}".format((step_size)))
+    print("The number of epochs is set to {} ".format(num_epochs))
+
+    parameters = stochastic_gradient_descent(dataset=TRAINING_DATA,
+                                             parameters=initial_params,
+                                             step_size=step_size,
+                                             num_epochs=num_epochs)
+
+    plot_index = 321
+    for epoch in random_5_epochs:
+        plt.subplot(plot_index)
+        plt1, = plt.plot(TEST_DATA.x,TEST_DATA.y,'r.',label="Test Data")
+
+        best_fit_x = np.linspace(range[0],range[1],num_sample_points)
+        best_fit_y = get_polynomial_output(best_fit_x,parameters[epoch+1])
+
+        plt2, = plt.plot(best_fit_x,best_fit_y,'b-',label="Regression Fit")
+
+        plt.legend()
+        plt.title("Fit for Epoch {}".format(epoch))
+
+        plot_index+=1
+
+    plt.subplots_adjust(wspace=0.4,hspace=0.5)
+    plt.show()
+
+
 if __name__ == "__main__":
-    run_q2_a()
+    run_q1_a()
