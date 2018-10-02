@@ -222,7 +222,7 @@ def run_q3():
     num_epochs = 10000
     range = [0,1.5]
     num_sample_points = 150
-    random_5_epochs = (10,500,2000,5000,9000)
+    random_5_epochs = (1,4,10,500,9000)
 
     print("The data has been initialized: ")
     print("The initial parameters are set to ({},{}) ".format(initial_params[0], initial_params[1]))
@@ -254,4 +254,4 @@ def run_q3():
 
 
 if __name__ == "__main__":
-    run_q1_a()
+    run_q3()
